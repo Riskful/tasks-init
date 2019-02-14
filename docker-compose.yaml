@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  php:
+    build: ./
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8086:80
+    working_dir: /var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: test
+      MYSQL_USER: root
+    volumes:
+      - ./databases:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6086:8080
