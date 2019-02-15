@@ -25,29 +25,16 @@ class Database
     }
 
     /**
-     * Вставка в таблицу.
+     * Запрос в БД.
      *
      * @param $query
      * @return bool|PDOStatement
      */
-    public function insert($query)
+    public function query($query)
     {
-        $prepare = $this->pdo->prepare($query);
+        $queryPrepare = $this->pdo->prepare($query);
+        $queryPrepare->execute();
 
-        return $prepare->execute();
-    }
-
-    /**
-     * Выборка из базы.
-     *
-     * @param $query
-     * @return bool|PDOStatement
-     */
-    public function select($query)
-    {
-        $execute = $this->pdo->prepare($query);
-        $execute->execute();
-
-        return $execute;
+        return $queryPrepare;
     }
 }

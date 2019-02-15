@@ -31,12 +31,12 @@ final class MyInit
         try {
             $query = "CREATE table test(
              id INT(6) AUTO_INCREMENT PRIMARY KEY,
-             script_name VARCHAR(25), 
+             script_name VARCHAR(25) NOT NULL, 
              start_time INT(10),
              end_time INT(10),
              result ENUM('normal', 'illegal', 'failed', 'success') NOT NULL);";
 
-            $this->db->insert($query);
+            $this->db->query($query);
         } catch (PDOException $exception) {
             throw new PDOException('Failed create table.', 0, $exception);
         }
@@ -59,7 +59,7 @@ final class MyInit
 
                 $query = "INSERT INTO test (script_name, start_time, end_time, result)
                          VALUES ('{$scriptName}', {$startTime}, {$endTime}, '{$result}');";
-                $this->db->insert($query);
+                $this->db->query($query);
 
                 $inc++;
             }
@@ -77,6 +77,6 @@ final class MyInit
     {
         $query = "SELECT * FROM test WHERE `result` = 'normal' OR `result` = 'success'";
 
-        return $this->db->select($query)->fetchAll();
+        return $this->db->query($query)->fetchAll();
     }
 }
